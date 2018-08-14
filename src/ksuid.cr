@@ -94,7 +94,7 @@ struct KSUID
   end
 
   # Returns the `KSUID` as `Bytes`.
-  def uid : Bytes
+  def to_slice : Bytes
     # ameba:disable Lint/ShadowingOuterLocalVar
     io = IO::Memory.new.tap do |io|
       io.write Utils.int_to_bytes(timestamp)
@@ -105,12 +105,12 @@ struct KSUID
 
   # Returns the `KSUID` as a hex-encoded `String`.
   def raw : String
-    uid.hexstring.upcase
+    to_slice.hexstring.upcase
   end
 
   # Writes the `KSUID` as a base62-encoded `String` to *io*.
   def to_s(io : IO) : Nil
-    io << Base62.encode(uid)
+    io << Base62.encode(to_slice)
   end
 
   def inspect(io : IO) : Nil
