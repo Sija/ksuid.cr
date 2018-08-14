@@ -26,13 +26,13 @@ struct KSUID
   STRING_ENCODED_SIZE = 27
 
   # `KSUID` with minimum valid value (`000000000000000000000000000`).
-  MIN = from(Bytes.new(TOTAL_SIZE, 0_u8))
+  MIN = from(StaticArray(UInt8, TOTAL_SIZE).new(0_u8))
 
   # `KSUID` with maximum valid value (`aWgEPTl1tmebfsQzFP4bxwgy80V`).
-  MAX = from(Bytes.new(TOTAL_SIZE, 255_u8))
+  MAX = from(StaticArray(UInt8, TOTAL_SIZE).new(255_u8))
 
   # The 16-byte random payload without the timestamp.
-  getter payload : Bytes
+  getter payload : StaticArray(UInt8, PAYLOAD_SIZE)
 
   # The timestamp portion of the `KSUID` as an `UInt32` which is uncorrected
   # for KSUID's special `EPOCH`.
@@ -57,6 +57,11 @@ struct KSUID
     new(timestamp, payload)
   end
 
+  # Converts `StaticArray` into a `KSUID`.
+  def self.from(array : StaticArray(UInt8, TOTAL_SIZE)) : KSUID
+    from(array.to_slice)
+  end
+
   # Generates a new `KSUID` with given *time* and random `payload`.
   def self.new(time : Time = Time.now)
     new(time, Random::Secure.random_bytes(PAYLOAD_SIZE))
@@ -73,7 +78,7 @@ struct KSUID
       raise Error.new("Valid KSUID payloads are #{PAYLOAD_SIZE} bytes")
     end
     @timestamp = timestamp.to_u32
-    @payload = payload
+    @payload = StaticArray(UInt8, PAYLOAD_SIZE).new { |i| payload[i] }
   end
 
   def_equals_and_hash @timestamp, @payload
@@ -93,7 +98,7 @@ struct KSUID
     # ameba:disable Lint/ShadowingOuterLocalVar
     io = IO::Memory.new.tap do |io|
       io.write Utils.int_to_bytes(timestamp)
-      io.write payload
+      io.write payload.to_slice
     end
     io.to_slice
   end

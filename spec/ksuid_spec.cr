@@ -5,7 +5,7 @@ describe KSUID do
     min = KSUID::MIN
     min.timestamp.should eq 0
     min.to_time.should eq Time.utc(2014, 5, 13, 16, 53, 20)
-    min.payload.should eq Bytes.new(KSUID::PAYLOAD_SIZE, 0_u8)
+    min.payload.should eq StaticArray(UInt8, KSUID::PAYLOAD_SIZE).new(0_u8)
     min.uid.should eq Bytes.new(KSUID::TOTAL_SIZE, 0_u8)
     min.raw.should eq "0000000000000000000000000000000000000000"
     min.to_s.should eq "000000000000000000000000000"
@@ -15,7 +15,7 @@ describe KSUID do
     max = KSUID::MAX
     max.timestamp.should eq 4294967295
     max.to_time.should eq Time.utc(2150, 6, 19, 23, 21, 35)
-    max.payload.should eq Bytes.new(KSUID::PAYLOAD_SIZE, 255_u8)
+    max.payload.should eq StaticArray(UInt8, KSUID::PAYLOAD_SIZE).new(255_u8)
     max.uid.should eq Bytes.new(KSUID::TOTAL_SIZE, 255_u8)
     max.raw.should eq "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
     max.to_s.should eq "aWgEPTl1tmebfsQzFP4bxwgy80V"
@@ -27,7 +27,7 @@ describe KSUID do
         string = "0o5Fs0EELR0fUjHjbCnEtdUwQe3"
         ksuid = KSUID.from(string)
         ksuid.to_time.should eq Time.epoch(1494985761)
-        ksuid.payload.hexstring.should eq "d7b6fe8cd7cff211704d8e7b9421210b"
+        ksuid.raw.should eq "05A95E21D7B6FE8CD7CFF211704D8E7B9421210B"
         ksuid.to_s.should eq string
       end
 
@@ -43,7 +43,7 @@ describe KSUID do
           123_u8, 148_u8, 33_u8, 33_u8, 11_u8]
         ksuid = KSUID.from(bytes)
         ksuid.to_time.should eq Time.epoch(1494985761)
-        ksuid.payload.hexstring.should eq "d7b6fe8cd7cff211704d8e7b9421210b"
+        ksuid.raw.should eq "05A95E21D7B6FE8CD7CFF211704D8E7B9421210B"
         ksuid.uid.should eq bytes
       end
 
