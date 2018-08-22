@@ -7,7 +7,7 @@ authors:
 dependencies:
   base62:
     github: Sija/base62.cr
-    branch: master
+    version: 0.1.1
 
 development_dependencies:
   ameba:
