@@ -4,7 +4,7 @@ require "./ksuid/*"
 struct KSUID
   include Comparable(KSUID)
 
-  VERSION = "0.1.0"
+  VERSION = "0.2.0"
 
   # KSUID's epoch starts more recently so that the 32-bit number space gives a
   # significantly higher useful lifetime of around 136 years from May 2014.
