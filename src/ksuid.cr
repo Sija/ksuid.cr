@@ -1,6 +1,58 @@
 require "base62"
 require "./ksuid/*"
 
+# KSUID stands for K-Sortable Unique IDentifier, a globally unique identifier
+# used by [Segment](https://segment.com/blog/a-brief-history-of-the-uuid/).
+#
+# Distributed systems require unique identifiers to track events throughout
+# their subsystems. Many algorithms for generating unique identifiers, like the
+# [Snowflake ID](https://blog.twitter.com/2010/announcing-snowflake) system,
+# require coordination with a central authority. This is an unacceptable
+# constraint in the face of systems that run on client devices, yet we still
+# need to be able to generate event identifiers and roughly sort them for
+# processing.
+#
+# The KSUID optimizes this problem into a roughly sortable identifier with
+# a high possibility space to reduce the chance of collision. KSUID uses
+# a 32-bit timestamp with second-level precision combined with 128 bytes of
+# random data for the "payload". The timestamp is based on the Unix epoch, but
+# with its base shifted forward from `1970-01-01 00:00:00 UTC` to `2014-05-13
+# 16:53:20 UTC`. This is to extend the useful life of the ID format to over
+# 100 years.
+#
+# Because KSUID timestamps use seconds as their unit of precision, they are
+# unsuitable to tasks that require extreme levels of precision. If you need
+# microsecond-level precision, a format like [ULID](https://github.com/ulid/spec)
+# may be more suitable for your use case.
+#
+# KSUIDs are "roughly sorted". Practically, this means that for any given event
+# stream, there may be some events that are ordered in a slightly different way
+# than they actually happened. There are two reasons for this. Firstly, the
+# format is precise to the second. This means that two events that are
+# generated in the same second will be sorted together, but the KSUID with the
+# smaller payload value will be sorted first. Secondly, the format is generated
+# on the client device using its clock, so KSUID is susceptible to clock shift
+# as well. The result of sorting the identifiers is that they will be sorted
+# into groups of identifiers that happened in the same second according to
+# their generating device.
+#
+# See the [canonical implementation](https://github.com/segmentio/ksuid) for more information.
+#
+# ```
+# require "ksuid"
+#
+# # Generate a random KSUID for the present time
+# KSUID.new
+#
+# # Generate a random KSUID for a specific timestamp
+# KSUID.new(time: Time.now - 3.hours)
+#
+# # Parse a KSUID string that you have received
+# KSUID.from("0o5Fs0EELR0fUjHjbCnEtdUwQe3")
+#
+# # Parse a KSUID byte slice that you have received
+# KSUID.from(Bytes.new(20, 255_u8))
+# ```
 struct KSUID
   include Comparable(KSUID)
 
