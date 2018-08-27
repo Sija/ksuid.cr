@@ -101,6 +101,22 @@ conversion method:
 ksuid = KSUID.from(bytes)
 ```
 
+### JSON
+
+```crystal
+require "ksuid/json"
+
+class Example
+  JSON.mapping id: KSUID
+end
+
+example = Example.from_json(%({"id": "aWgEPTl1tmebfsQzFP4bxwgy80V"}))
+# => #<Example:0x10a8723c0 @id=KSUID(aWgEPTl1tmebfsQzFP4bxwgy80V)>
+
+example.to_json
+# => "{\"id\":\"aWgEPTl1tmebfsQzFP4bxwgy80V\"}"
+```
+
 ## Contributing
 
 1. Fork it (<https://github.com/Sija/ksuid.cr/fork>)
