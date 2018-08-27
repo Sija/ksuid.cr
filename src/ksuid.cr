@@ -70,10 +70,12 @@ struct KSUID
   # Payload is 16 bytes.
   PAYLOAD_SIZE = 16
 
-  # `KSUID`s are 20 bytes:
-  # - 00-03 byte: `UInt32` BE UTC `timestamp` with custom epoch
-  # - 04-19 byte: random `payload`
-  TOTAL_SIZE = TIMESTAMP_SIZE + PAYLOAD_SIZE
+  {% begin %}
+    # `KSUID`s are 20 bytes:
+    # - 00-03 byte: `UInt32` BE UTC `timestamp` with custom epoch
+    # - 04-19 byte: random `payload`
+    TOTAL_SIZE = {{ TIMESTAMP_SIZE + PAYLOAD_SIZE }}
+  {% end %}
 
   # The length of a `KSUID` when string (base62) encoded.
   STRING_ENCODED_SIZE = 27
