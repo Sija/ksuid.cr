@@ -117,6 +117,22 @@ example.to_json
 # => "{\"id\":\"aWgEPTl1tmebfsQzFP4bxwgy80V\"}"
 ```
 
+### YAML
+
+```crystal
+require "ksuid/yaml"
+
+class Example
+  YAML.mapping id: KSUID
+end
+
+example = Example.from_yaml(%(---\nid: aWgEPTl1tmebfsQzFP4bxwgy80V\n))
+# => #<Example:0x10a8723c0 @id=KSUID(aWgEPTl1tmebfsQzFP4bxwgy80V)>
+
+example.to_yaml
+# => "---\nid: aWgEPTl1tmebfsQzFP4bxwgy80V\n"
+```
+
 ## Contributing
 
 1. Fork it (<https://github.com/Sija/ksuid.cr/fork>)
