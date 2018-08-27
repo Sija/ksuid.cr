@@ -1,5 +1,6 @@
-require "base62"
-require "./ksuid/*"
+require "./ksuid/error"
+require "./ksuid/utils"
+require "./ksuid/base62"
 
 # KSUID stands for K-Sortable Unique IDentifier, a globally unique identifier
 # used by [Segment](https://segment.com/blog/a-brief-history-of-the-uuid/).

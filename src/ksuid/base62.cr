@@ -1,3 +1,5 @@
+require "base62"
+
 struct KSUID
   module Base62
     include ::Base62
