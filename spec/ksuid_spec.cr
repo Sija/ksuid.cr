@@ -26,7 +26,7 @@ describe KSUID do
       it "constructs new KSUID from valid string" do
         string = "0o5Fs0EELR0fUjHjbCnEtdUwQe3"
         ksuid = KSUID.from(string)
-        ksuid.to_time.should eq Time.epoch(1494985761)
+        ksuid.to_time.should eq Time.unix(1494985761)
         ksuid.raw.should eq "05A95E21D7B6FE8CD7CFF211704D8E7B9421210B"
         ksuid.to_s.should eq string
       end
@@ -42,7 +42,7 @@ describe KSUID do
           140_u8, 215_u8, 207_u8, 242_u8, 17_u8, 112_u8, 77_u8, 142_u8,
           123_u8, 148_u8, 33_u8, 33_u8, 11_u8]
         ksuid = KSUID.from(bytes)
-        ksuid.to_time.should eq Time.epoch(1494985761)
+        ksuid.to_time.should eq Time.unix(1494985761)
         ksuid.raw.should eq "05A95E21D7B6FE8CD7CFF211704D8E7B9421210B"
         ksuid.to_slice.should eq bytes
       end

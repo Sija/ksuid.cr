@@ -124,7 +124,7 @@ struct KSUID
 
   # Generates a new `KSUID` with given *time* and *payload*.
   def self.new(time : Time, payload : Bytes)
-    new(time.to_utc.epoch - EPOCH, payload)
+    new(time.to_utc.to_unix - EPOCH, payload)
   end
 
   # Generates a new `KSUID` with given *timestamp* and *payload*.
@@ -145,7 +145,7 @@ struct KSUID
 
   # Returns the timestamp portion of the `KSUID` as a `Time` object.
   def to_time : Time
-    Time.epoch(timestamp.to_i64 + EPOCH)
+    Time.unix(timestamp.to_i64 + EPOCH)
   end
 
   # Returns the `KSUID` as `Bytes`.
