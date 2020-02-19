@@ -46,7 +46,7 @@ require "./ksuid/base62"
 # KSUID.new
 #
 # # Generate a random KSUID for a specific timestamp
-# KSUID.new(time: Time.now - 3.hours)
+# KSUID.new(time: Time.utc - 3.hours)
 #
 # # Parse a KSUID string that you have received
 # KSUID.from("0o5Fs0EELR0fUjHjbCnEtdUwQe3")
@@ -118,7 +118,7 @@ struct KSUID
   end
 
   # Generates a new `KSUID` with given *time* and random `payload`.
-  def self.new(time : Time = Time.now)
+  def self.new(time : Time = Time.utc)
     new(time, Random::Secure.random_bytes(PAYLOAD_SIZE))
   end
 

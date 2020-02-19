@@ -61,13 +61,13 @@ describe KSUID do
     end
 
     it "fails when given payload has incorrect size" do
-      expect_raises(KSUID::Error) { KSUID.new(time: Time.now, payload: Bytes.new(3, 255_u8)) }
+      expect_raises(KSUID::Error) { KSUID.new(time: Time.utc, payload: Bytes.new(3, 255_u8)) }
     end
   end
 
   describe "#<=>" do
     it "sorts KSUIDs by timestamp" do
-      time = Time.now
+      time = Time.utc
       ksuid1 = KSUID.new(time: time)
       ksuid2 = KSUID.new(time: time + 1.second)
       [ksuid2, ksuid1].sort.should eq [ksuid1, ksuid2]
@@ -76,7 +76,7 @@ describe KSUID do
 
   describe "#==" do
     it "compares KSUIDs by timestamp and payload" do
-      time = Time.now
+      time = Time.utc
       ksuid1 = KSUID.new(time: time)
       ksuid2 = KSUID.new(time: time)
       ksuid1.should_not eq ksuid2
