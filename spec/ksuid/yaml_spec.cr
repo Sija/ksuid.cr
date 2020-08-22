@@ -2,7 +2,9 @@ require "../spec_helper"
 require "../../src/ksuid/yaml"
 
 private class YAMLWithKSUID
-  YAML.mapping value: KSUID
+  include YAML::Serializable
+
+  property value : KSUID
 end
 
 describe KSUID do
