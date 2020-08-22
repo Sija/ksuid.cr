@@ -2,7 +2,9 @@ require "../spec_helper"
 require "../../src/ksuid/json"
 
 private class JSONWithKSUID
-  JSON.mapping value: KSUID
+  include JSON::Serializable
+
+  property value : KSUID
 end
 
 describe KSUID do
