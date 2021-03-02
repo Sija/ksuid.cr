@@ -8,8 +8,7 @@ struct KSUID
     def int_from_bytes(value : String | Bytes) : BigInt
       value = value.to_slice if value.is_a?(String)
       value.to_a
-        .map(&.to_s(2).rjust(8, '0'))
-        .join
+        .join(&.to_s(2).rjust(8, '0'))
         .to_big_i(2)
     end
 
