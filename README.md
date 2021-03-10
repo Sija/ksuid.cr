@@ -1,4 +1,4 @@
-# ksuid.cr [![Build Status](https://travis-ci.org/Sija/ksuid.cr.svg?branch=master)](https://travis-ci.org/Sija/ksuid.cr) [![Releases](https://img.shields.io/github/release/Sija/ksuid.cr.svg)](https://github.com/Sija/ksuid.cr/releases) [![License](https://img.shields.io/github/license/Sija/ksuid.cr.svg)](https://github.com/Sija/ksuid.cr/blob/master/LICENSE)
+# ksuid.cr [![CI](https://github.com/Sija/ksuid.cr/actions/workflows/ci.yml/badge.svg)](https://github.com/Sija/ksuid.cr/actions/workflows/ci.yml) [![Releases](https://img.shields.io/github/release/Sija/ksuid.cr.svg)](https://github.com/Sija/ksuid.cr/releases) [![License](https://img.shields.io/github/license/Sija/ksuid.cr.svg)](https://github.com/Sija/ksuid.cr/blob/master/LICENSE)
 
 This library implements the [K-Sortable Globally Unique IDs](https://github.com/segmentio/ksuid) from Segment.
 The original readme for the Go version of KSUID does a great job of explaining
