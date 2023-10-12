@@ -107,7 +107,9 @@ ksuid = KSUID.from(bytes)
 require "ksuid/json"
 
 class Example
-  JSON.mapping id: KSUID
+  include JSON::Serializable
+
+  property id : KSUID
 end
 
 example = Example.from_json(%({"id": "aWgEPTl1tmebfsQzFP4bxwgy80V"}))
@@ -123,7 +125,9 @@ example.to_json
 require "ksuid/yaml"
 
 class Example
-  YAML.mapping id: KSUID
+  include YAML::Serializable
+
+  property id : KSUID
 end
 
 example = Example.from_yaml(%(---\nid: aWgEPTl1tmebfsQzFP4bxwgy80V\n))
